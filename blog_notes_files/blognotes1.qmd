@@ -1,0 +1,44 @@
+---
+title: "blognotes1"
+author: "Carter Young"
+format: html
+editor: visual
+---
+
+### Notes 28/01/2024: Date formats in R
+https://www.r-bloggers.com/2013/08/date-formats-in-r/
+
+#### if dates stored as characters:
+
+use **as.Date** & specify format of date
+    ex. %m/%d/%y
+
+seems to be part of base R--are there any packages that might do it differently?
+
+trying it out:
+```{r}
+dates <- c("28/01/24")
+betterDates <- as.Date (dates, format = "%d/%m/%y")
+betterDates
+
+```
+looks like it worked!
+
+#### if dates are numerical & am importing thru excel:
+"*For Excel on Windows, the origin date is December 30, 1899 for dates after 1900. (Excel’s designer thought 1900 was a leap year, but it was not.) For Excel on Mac, the origin date is January 1, 1904.*" now that's weird but ok
+
+need to define the origin date... so origin = 1904-01-01? 
+
+*from Mac Excel: dates <- c(29367, 37078) betterDates <- as.Date(dates,origin = "1904-01-01")*
+
+can format other date formulas, like days of the week
+```{r}
+dates <- c("Mon Jan 29")
+format(betterDates,
+  "%a %b %d")
+
+```
+I'm not sure why it gave me today's date. I'll look into that
+
+there's a way to make sure two-digit years are the correct century, otherwise R will make assumptions about what's 1900s vs 2000s
+
