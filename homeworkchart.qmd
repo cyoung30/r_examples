@@ -7,14 +7,17 @@ editor: visual
 ## Make chart in R
 
 ```{r}
-# create dummy data
+# CCI Blacklight data
 data <- data.frame(
   name=letters[1:5],
-  value=sample(seq(4,15),5)
+  value=sample(seq(4,150),5)
 )
 
-# The most basic barplot you can do:
-barplot(height=data$value, names=data$name)
+barplot(height=data$value, names=data$name, col=rgb(0.2,0.4,0.2,0.6),
+        xlab="Order",
+        ylab="# present",
+        main="Insects at blacklight",
+        ylim=c(0, 200)
+        )
+
 ```
-
-
