@@ -1,0 +1,17 @@
+---
+title: "Randy's Reactions"
+format:
+  html:
+    toc: true
+editor: source
+---
+
+## Homework chart, January 29, 2024
+
+Nice chart! And you made up some data-nice.  Some things to consider for your next code/quarto doc:
+
+* This homework was simply to find and make a chart-you nailed that.  I also wanted a bit more context.
+* In the future imagine yourself in 3 years trying to understand this, or if you were to share it with a colleague.  Make sure to add the URL (or other source of the code), and a few explanatory bullets.
+* In the future add comments to your code so you will know what each section/line means, and can reuse it for other work.
+
+THANK YOU!

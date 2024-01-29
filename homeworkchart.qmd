@@ -1,7 +1,7 @@
 ---
 title: "Base R chart"
 format: html
-editor: visual
+editor: source
 ---
 
 ## Make chart in R
