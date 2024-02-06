@@ -42,3 +42,4 @@ I'm not sure why it gave me today's date. I'll look into that
 
 there's a way to make sure two-digit years are the correct century, otherwise R will make assumptions about what's 1900s vs 2000s
 
+note to self-figure out what the keybind is to select all for staging. not sure why it isn't working on this mac
