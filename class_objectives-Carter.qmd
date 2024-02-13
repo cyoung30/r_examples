@@ -32,3 +32,10 @@ Over the course it is expected you will:
 -   Social networking package -learn and make sure you can format data properly for earwig data
 -   Nice figure due end of April. Use ggplot2 for this. 
 -   Complete workflowR site. https://workflowr.github.io/workflowr/
+
+## Progress tracking
+
+* Randy and Carter met to review objectives February 8, 2024.
+
+
+
