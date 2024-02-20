@@ -1,0 +1,20 @@
+---
+title: "rchart_1tues6"
+format: html
+editor: visual
+---
+
+boxplot from r-graph-gallery "most basic boxplot"
+
+```{r}
+# Load ggplot2
+library(ggplot2)
+ 
+#Basic boxplot with mock lichen data from Costa Rica field ecology course
+#Probably not the correct analysis to use but I felt like boxplots
+#practiced importing data from excel. Need to keep variables capitalized the same way or else they'll be a weird new column
+#practiced GGplot2 in R... doesn't feel to different from base?
+ggplot(chart_test, aes(x=as.factor(Size), y=SubstrateDiameter)) + 
+    geom_boxplot(fill="green", alpha=0.2) + 
+    xlab("Size")
+```

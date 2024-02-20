@@ -10,12 +10,17 @@
 # load packages ------
 # we will first install pacman, then use it to install and load packages
 
-install.packages('pacman')
-library(pacman)
-
-p_load(chorddiag, htmlwidgets, tidyverse)
-
-
+# install.packages('pacman')
+# library(pacman)
+# 
+# p_load(chorddiag, htmlwidgets, tidyverse)
+library(chorddiag)
+library(htmlwidgets)
+library(tidyverse)
+library(Matrix)
+library(tidygraph)
+library(igraph)
+library(readr)
 
 # read in and wrangle data ------
 # read in data
@@ -63,8 +68,8 @@ chord<-chorddiag(data = matrix_df,
                  tooltipGroupConnector = "    &#x25B6;    ",
                  chordedgeColor = "#363533"
 )
-chord 
-
+ 
+chord
 #save then print to have white background
 htmlwidgets::saveWidget(chord,
                         "chord.html",
