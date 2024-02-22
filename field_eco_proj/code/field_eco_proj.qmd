@@ -1,0 +1,48 @@
+---
+title: "field_eco_proj"
+format: html
+editor: visual
+---
+
+## Field Ecology 2024 Project
+02/21/2024
+trying to make a nice plot on lichen data for my field ecology course!
+
+vars: substrate (stem) diameter where lichen grows; surface area of lichen
+
+substrate_diameter measured with calipers, surface_area measured with imageJ
+
+working off of <https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/#prep> (but relying heavily on ChatGPT for questions)
+
+```{r}
+## load packages
+library(tidyverse)
+library(readxl)
+
+## load lichen data from excel. do i need to save it as a csv? did it anyway
+lichen_data <- read_excel("/Users/carteryoung/Desktop/cr/FULL_coenogonium.xlsx")
+write.csv(lichen_data, "lichen.csv", row.names = FALSE)
+## head to check it
+head(lichen_data, 10)
+
+
+## make a plot!
+(g <- ggplot(lichen_data, aes(x = `Substrate_Diameter`, y = `Surface_Area`)))
+## why's it got x and y labels and no numbers?
+## asked ChatGPT and it told me I needed to put in the vars. names as `name_name` instead of the usual quotes. works now!
+
+## adding points
+g + geom_point(aes(color = "darkolivegreen3", shape = "diamond"), size = 2)
+## that is neither darkolivegreen or a diamond! moving on anyway
+
+## adding linear regression, fixed earlier problems w/ color
+## looks nicer when indented...
+g + geom_point(aes(x = `Substrate_Diameter`, y = `Surface_Area`), 
+               shape = "diamond", 
+               color = "darkolivegreen3", 
+               size = 2) + 
+  geom_smooth(method = "lm", se = FALSE)
+
+```
+
+
