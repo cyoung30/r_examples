@@ -5,8 +5,8 @@ editor: visual
 ---
 
 ## Field Ecology 2024 Project
-02/21/2024
-trying to make a nice plot on lichen data for my field ecology course!
+
+02/21/2024 trying to make a nice plot on lichen data for my field ecology course!
 
 vars: substrate (stem) diameter where lichen grows; surface area of lichen
 
@@ -44,5 +44,3 @@ g + geom_point(aes(x = `Substrate_Diameter`, y = `Surface_Area`),
   geom_smooth(method = "lm", se = FALSE)
 
 ```
-
-
