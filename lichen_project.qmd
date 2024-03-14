@@ -11,6 +11,7 @@ working on FEE lichen data w/ help from Cathi's notes. goals: make a pretty line
 ```{r}
 #load requirements
 library(ggplot2)
+library(readr)
 library(ggthemes)
 library(tidyverse)
 library(agricolae)
@@ -19,7 +20,9 @@ library(lmodel2)
 library(rstatix)
 
 #load data
-lichen <- FULL_coenogonium
+lichen_data <- read_excel("/Users/carteryoung/Desktop/cr/FULL_coenogonium.xlsx")
+write.csv(lichen_data, "lichen.csv", row.names = FALSE)
+lichen <- lichen_data
 
 #make ggplot for visualization
 reg.lichen <-ggplot(lichen, aes(x = Substrate_Diameter, y = Surface_Area)) + 
