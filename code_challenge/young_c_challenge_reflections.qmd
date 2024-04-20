@@ -1,0 +1,95 @@
+---
+title: "young_c_challenge_reflections"
+format: html
+editor: visual
+---
+
+# Reflections on code challenge
+
+###Good stuff: 
+I think I had a pretty good start to my workflow, targeting the more obvious data in refcon first with some success there, and made a few mockup plots to test. I also think (maybe due to coming across a lot) that when I had an error or something didn't look right, I tried to find out the source and remember exactly what went wrong there first on my own, then ask chatGPT for a proofread (it's great at tracking down a missing + or parenthesis), and when I really had trouble with producing a plot that was both faceted and grouped I went to Randy's code and went through deleting each function to find out which ones were the most essential to run the code in the right way. while this obviously isn't always an option, it did teach me (again) the importance of tidy data and keeping track of the tiny stuff. It turned out that the reasons my plot kept coming up wonky were: 1) because my data was using separate columns for "current" and "ref" percentages instead of having only one column with those two variables as values and 2) because I defined "values" and "labels" at the same time in the "scales_fill_manual" function, which resulted in me getting no grouping of data. as a result of these troubles, I think I've got a better handle on plotting things and on using left_join and pivot_longer, functions I didn't give much attention to the first time we learned them.
+Also, I think I did a nice job making my code readable and organized, at least by my own standards. 
+
+###Improvable stuff:
+I think I could have definitely found more streamlined ways to clean my data, and I also definitely over-cleaned some datasets. It's a bit of a struggle to keep track of many tables in the environment and a lot of unnecessary data in all those tables. I probably got rid of a lot of rows and columns that I didn't need to, but that were just visually unpleasant to me. I could have probably avoided the "current"/"ref" percentage issue by not cleaning the data as much and using a left_join and mutate that made each class per BpS a unique code (Oak A, Oak B, Oak Developed, etc.)... which could have also prevented the excel shenanigans.
+
+# Useful Code Snippets
+
+select and filter to get rid of columns and rows, respectively
+```{r}
+
+refcon <- select(raw_refcon, -Water) 
+
+filtered_refcon <- refcon %>%
+  filter(Model_Code %in% c("13040_32_43_44_49",
+                           "13670_32_44", 
+                           "15070_44"))
+```
+
+math in the mutate function
+```{r}
+combine <- combine %>%
+  mutate(current_percent = as.integer((fraction/whole)*100)) 
+```
+
+asked chat for this one: it just cuts out all numbers after the first five digits
+```{r}
+bps_model$Model_Code <- sub("^([0-9]{5}).*", "\\1", bps_model$Model_Code)
+```
+
+left joins merge datasets
+```{r}
+bps_ref_current <- left_join(merged_combine, 
+                             merged_refcon, 
+                             by = c("BpS_Name", "Class"))
+```
+
+pivot longer used within a dataset to turn two columns into one column with two variables
+```{r}
+bps_ref_current <- pivot_longer(bps_ref_current, 
+                                cols = c(current_percent, ref_percent),
+                                names_to = "percent_type",
+                                values_to = "percent")
+```
+
+ordering data in reverse order (maybe this has to do with the coord flip)
+```{r}
+bps_ref_current$class <- factor(bps_ref_current$class, levels = c(
+  "Developed", "Agriculture", "UE", "UN", "E", "D", "C", "B", "A"))
+
+```
+
+just the whole darn chart with annotations: all useful for later plotting 
+```{r}
+# make the chart ----
+bps_plot <- ggplot(bps_ref_current, 
+               aes(x = class, 
+                   y = percent, 
+                   fill = factor(percent_type))) + # "fill" adds different colors per categorical variable determined by "factor"
+  geom_col(position = position_dodge()) + # makes a bar plot
+  facet_wrap(~bps_name, labeller = labeller(bps_name = label_wrap_gen())) +
+  coord_flip() + # makes things horizontal
+  labs(title = "Succession Classes past and present", 
+       subtitle = "Top BpSs selected for illustration. Not all succession classes present in all BpSs",
+       caption = "Data from landfire.gov.",
+       x = "", 
+       y = "Percent") + 
+  scale_fill_manual(name = "", 
+                    values = c("#3d4740", "#32a852" ), # I did copy colors from hints for consistency
+                    labels = c("Present", "Past"))
+# scale_fill_manual(name = "", values = c("Present" = "#3d4740", "Past" = "#32a852"))
+# have to put values and labels separately! this was what was messing the entire chart up. took me ages to figure this one out
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
