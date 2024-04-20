@@ -1,0 +1,78 @@
+---
+title: "lichen_project"
+format: html
+editor: visual
+---
+
+## lichen_project
+
+working on FEE lichen data w/ help from Cathi's notes. goals: make a pretty linear regression plot using ggplot w/ theme 'tufte'
+
+Canopy density vs. light regression
+
+```{r}
+#load requirements
+library(ggplot2)
+library(readr)
+library(ggthemes)
+library(tidyverse)
+library(agricolae)
+library(plyr)
+library(lmodel2)
+library(rstatix)
+library(readxl)
+
+#load data
+luxdens.reg <- ggplot(light_data, aes(x = open, y = lux)) +
+  geom_point(size=3)+ # add points
+  geom_smooth(method="lm",se=FALSE, color="black")+ # add regression
+  theme_tufte(base_size=20) + # add theme
+  geom_rangeframe(0-75) + # axis management
+  labs(x = "Percent Canopy Open", y = "Lux") + scale_y_continuous() + 
+  scale_x_continuous()+ 
+  theme(axis.ticks.length=unit(-0.25, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")),
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")))
+
+
+# visualize
+print(luxdens.reg)
+
+```
+
+```{r}
+#analyze canopy vs light
+model <- lm(density ~ lux, data = luxdens)
+ 
+summary(model)
+```
+
+Substrate diameter vs. surface area
+
+```{r}
+#load requirements
+library(ggplot2)
+library(readr)
+library(ggthemes)
+library(tidyverse)
+library(agricolae)
+library(plyr)
+library(lmodel2)
+library(rstatix)
+
+# make ggplot for visualization
+
+reg.lichen <-ggplot(lichen_data, aes(x = "Diameter", y = "Area")) + 
+  geom_point(size=3)+ 
+  geom_smooth(method="lm",se=FALSE, color="black")+ 
+  theme_tufte(base_size=20) + 
+  geom_rangeframe() +
+  scale_y_continuous() + 
+  scale_x_continuous()+ 
+  theme(axis.ticks.length=unit(-0.25, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")),
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")))
+reg.lichen
+
+
+```

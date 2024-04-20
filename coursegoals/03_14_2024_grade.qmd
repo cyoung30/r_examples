@@ -1,0 +1,9 @@
+---
+title: "03_14_2024_grade"
+format: html
+editor: visual
+---
+
+###Grades reflection March 14 
+
+I think I ought to get a B- or lower. That might seem low, but I feel like I have not put in the proper amount of work the past few weeks. I mean to use my Costa Rica lichen project for my main workflowr visual, but since I have gotten far behind on that, I have nothing much to work with in workflowr, which has really stagnated. Since I finally have some time to clean and analyze the rest of my datasets, I'll get back into the flow of things and hopefully make up for what I missed, but I don't want to give myself a grade for work I haven't done yet. As for what I've done in the past few months, I think I have mostly stayed on track with the tutorials that the class has gone through, and I do feel more competent with R than I did a few weeks ago, and more confident then than two months ago, etc. which I think is a good sign that I've learned something!

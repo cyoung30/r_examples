@@ -1,0 +1,168 @@
+---
+title: "lichens"
+format: html
+editor: visual
+---
+
+Load stuff
+
+```{r}
+# load libraries
+library(ggplot2)
+library(ggpmisc)
+library(ggthemes)
+library(readxl)
+library(scales)
+# load data
+
+lichen_data <- read_excel("/Users/carteryoung/Desktop/stupiddata/coenogonium.xlsx")
+light_data <- read_excel("/Users/carteryoung/Desktop/stupiddata/luxdens.xlsx")
+
+# check data
+lichen_data
+light_data
+```
+
+\
+LuxDens reg
+
+```{r}
+# create scatter plot with regression line
+luxdens.reg <- ggplot(light_data, aes(x = open, y = lux)) +
+  # add points
+  geom_point(size = 1, shape = 1, color = "black") +
+  # add regression
+  geom_smooth(method="lm", se=FALSE, color="black")+ 
+  # add theme
+  theme_tufte(base_size=15) + 
+  # axis management
+  geom_rangeframe() +
+  # limit axes
+  scale_x_continuous(limits = c(0, 60)) + 
+  scale_y_continuous(limits = c(0, 18000), labels = comma) + 
+  # add axes lines
+  theme(axis.line.x = element_line(color = "black", size = 0.2), 
+        axis.line.y = element_line(color = "black", size = 0.2)) +
+  # labels
+  labs(x = "Percent Canopy Open", y = "Lux") 
+
+
+# visualize
+print(luxdens.reg)
+
+# linear regression and analysis
+reg.luxdens <- lm(lux~open, light_data)
+# summarize
+summary(reg.luxdens)
+```
+
+Diameter vs. Area reg
+
+```{r}
+# create scatter plot with regression line for visualization
+lichen.reg <- ggplot(lichen_data, aes(x = Diameter, y = Area)) +
+  # add points
+  geom_point(size = 1.5, shape = 1, color = "black") +
+  # add regression
+  geom_smooth(method="lm", se=FALSE, color="black")+ 
+  # add theme
+  theme_tufte(base_size=15) + 
+  # axis management
+  geom_rangeframe() +
+  # limit axes
+  scale_x_continuous(limits = c(0, 30)) + 
+  scale_y_continuous(limits = c(0, 9)) + 
+  # add axes lines
+  theme(axis.line.x = element_line(color = "black", size = 0.2), 
+        axis.line.y = element_line(color = "black", size = 0.2)) +
+  # axis labels
+  labs(x = "Substrate Diameter", y = "Thallus Surface Area") 
+ 
+
+# visualize
+print(lichen.reg)
+
+# linear regression and analysis
+reg.lichen <- lm(Area~Diameter, lichen_data)
+summary(reg.lichen)
+```
+
+Surface Area vs Density reg
+
+```{r}
+# create scatter plot with regression line
+dens.reg <- ggplot(lichen_data, aes(x = open, y = Area)) + 
+# add points
+  geom_point(size = 1.5, shape = 1, color = "black") +
+  # add regression
+  geom_smooth(method="lm", se=FALSE, color="black")+ 
+  # add theme
+  theme_tufte(base_size=15) + 
+  # axis management
+  geom_rangeframe() +
+  # limit axes
+  scale_x_continuous(limits = c(0, 13)) + 
+  scale_y_continuous(limits = c(0, 9)) + 
+  # add axes lines
+  theme(axis.line.x = element_line(color = "black", size = 0.2), 
+        axis.line.y = element_line(color = "black", size = 0.2)) +
+  labs(x = "Percent Canopy Open", y = "Thallus Surface Area") 
+ 
+
+# visualize
+print(dens.reg)
+
+# linear regression and analysis
+reg.dens <- lm(Area~open, lichen_data)
+summary(reg.dens)
+```
+
+Surface Area vs light reg
+
+```{r}
+# create scatter plot with regression line
+lux.reg <- ggplot(lichen_data, aes(x = lux, y = Area)) +
+  # add points
+  geom_point(size = 1.5, shape = 1, color = "black") +
+  # add regression
+  geom_smooth(method="lm", se=FALSE, color="black")+ 
+  # add theme
+  theme_tufte(base_size=15) + 
+  # axis management
+  geom_rangeframe() +
+  # limit axes
+  scale_x_continuous(limits = c(0, 4100)) + 
+  scale_y_continuous(limits = c(0, 9)) + 
+  # add axes lines
+  theme(axis.line.x = element_line(color = "black", size = 0.2), 
+        axis.line.y = element_line(color = "black", size = 0.2)) 
+  # axis labels
+  labs(x = "Lux", y = "Thallus Surface Area") 
+ 
+
+# visualize
+print(lux.reg)
+
+# linear regression and analysis
+reg.lux <- lm(Area~lux, lichen_data)
+summary(reg.lux)
+```
+
+Test
+
+```{r}
+trans <- lichen_data
+
+# Create the plot with a secondary axis
+stupid.plot <- ggplot(lichen_data, aes(x = lux, y = Area)) +
+  geom_point(size = 3) +  # Add points
+  theme_tufte(base_size = 20) +  # Theme
+  geom_rangeframe() +  # Axis management
+  labs(x = "Lux", y = "Thallus Surface Area") +
+  scale_y_continuous(
+    sec.axis = sec_axis(trans = trans, name = "Secondary Axis Name")
+  )
+
+# Print the plot
+print(stupid.plot)
+```
