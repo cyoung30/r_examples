@@ -1,8 +1,18 @@
 # Code challenge for R class: make a faceted bar plot of biophysical setting data
 
+###  Rands's comments-----
+
+# you did it!
+# I used a different package to open the excel file-openxlsx seems more stable and didn't give me errors
+# Nice comments and formatting of code
+# Keep this code and practice the functions on other datasets
+
 # load libraries ----
 library(tidyverse)
-library(xlsx)
+#library(xlsx)
+
+install.packages('openxlsx')
+library(openxlsx)
 
 # load data ----
 raw_bps_aoi <- read_csv("code_challenge/input_data/bps_aoi_attributes.csv")
@@ -107,7 +117,12 @@ bps_ref_current <- left_join(merged_combine,
 # looks like UN slipped through the cracks. running out of time at this point, so I'll just sneak the UN row back in in excel, especially since none of the BpS have any "UN" on them.
 # messed around in excel
 # write.xlsx(bps_ref_current, "bps_ref_current.xlsx")
-bps_ref_current <- read.xlsx("code_challenge/input_data/TESTbps_ref_current.xlsx", sheetIndex = 1)
+### bps_ref_current <- read.xlsx("code_challenge/input_data/TESTbps_ref_current.xlsx", sheetIndex = 1)
+
+
+
+# Randy used openxlsx package-the other didn't work
+bps_ref_current <- read.xlsx("code_challenge/input_data/TESTbps_ref_current.xlsx", sheet = 1)
 
 # Order classes. have to put them in reverse order; 
 bps_ref_current$class <- factor(bps_ref_current$class, levels = c(
